@@ -27,6 +27,8 @@ def imdb_score_distribution(shows_df):
 imdb_score_distribution(movies_df) # To find average of imdb scores of Movies
 imdb_score_distribution(tv_shows_df) # To find average of imdb scores of TV Shows
 
+#Plotting the bar chart for Movies and TV Shows throughout the years
+
 import matplotlib.pyplot as plt
 import numpy as np
 
