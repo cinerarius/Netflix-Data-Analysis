@@ -30,15 +30,35 @@ imdb_score_distribution(tv_shows_df) # To find average of imdb scores of TV Show
 import matplotlib.pyplot as plt
 import numpy as np
 
-after_2015 = df[df['release_year'] >= 2015] #DataFrame to show releases after 2015
+after_2000 = df[df['release_year'] >= 2000] #DataFrame to show releases after 2015
 
 # Group the data by 'release_year' and 'type' and count the occurrences
-grouped_data = after_2015.groupby(['release_year', 'type']).size().unstack(fill_value=0)
+grouped_data = after_2000.groupby(['release_year', 'type']).size().unstack(fill_value=0)
 
 # Plot the clustered column chart
 grouped_data.plot(kind='bar', figsize=(12, 6))
 plt.xlabel('Release Year')
 plt.ylabel('No. of Movies')
 plt.title('Movies and TV Shows by Release Year')
+plt.legend(title='Type')
+plt.show()
+
+# Plotting the distribution of IMDb scores for Movies and TV Shows
+
+# Calculate the mean IMDb ratings for Movies and TV Shows by release year
+movies_ratings = after_2000[after_2000['type'] == 'Movie'].groupby('release_year')['imdb_score'].mean()
+tv_shows_ratings = after_2000[after_2000['type'] == 'TV Show'].groupby('release_year')['imdb_score'].mean()
+
+# Combine the data into a single DataFrame for plotting
+ratings_data = pd.DataFrame({
+    'Movies': movies_ratings,
+    'TV Shows': tv_shows_ratings
+}).dropna()
+
+# Plot the bar chart
+ratings_data.plot(kind='bar', figsize=(12, 6))
+plt.xlabel('Release Year')
+plt.ylabel('IMDb Rating')
+plt.title('IMDb Ratings for Movies and TV Shows by Release Year')
 plt.legend(title='Type')
 plt.show()
